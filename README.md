@@ -27,7 +27,9 @@ A poem view web app.
 # Setup
 preprequirements: 
 * Docker installed: https://www.docker.com/products/docker-engine
-* AWS Account: https://aws.amazon.com/
+* AWS IAM User: https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/signup-create-iam-user.html
+  * ffly-poem/.aws will get mapped to ~/.aws in container, so all config goes there.
+  * Required permissions: dynamo admin.
 
 ## Setup Development Environment
 build Docker image:
