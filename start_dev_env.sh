@@ -9,5 +9,5 @@ docker run \
   -it --rm \
   --name ffly-poem-dev-env  \
   --mount type=bind,source="$(pwd)",target=/ffly-poem \
-  --mount type=bind,source="$(pwd)/.aws",target=/.aws \
+  --mount type=bind,source="$(pwd)/.aws",target=/root/.aws \
   ffly-poem-dev-env
