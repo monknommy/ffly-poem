@@ -1,16 +1,21 @@
 FROM ubuntu:latest
 
-LABEL maintainer="Xuan Xu <xx9483@gmail.com>"
+LABEL maintainer="Shawn Xu <xx9483@gmail.com>"
 
-#python3
-RUN apt-get update \
-  && apt-get install -y python3-pip python3-dev \
-  && cd /usr/local/bin \
-  && ln -s /usr/bin/python3 python \
-  && pip3 install --upgrade pip
+RUN apt-get update
+
+# python3
+# -y option to auto accept prompt 
+RUN apt-get install -y python3.7 \
+&& ln -s /usr/bin/python3.7 /usr/bin/python
+
+# pip
+RUN  apt-get install -y python3-pip
+
+# peewee for sqllite
+RUN python -m pip install  --upgrade peewee
 
 # AWS setup
-RUN pip install boto3 #aws python sdk
-mkdir /.aws #will get mounted on docker run
+RUN python -m pip install boto3 #aws python sdk
 
 CMD [ "/bin/bash" ]
