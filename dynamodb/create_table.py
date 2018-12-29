@@ -8,7 +8,7 @@ import boto3
 client = boto3.client('dynamodb')
 
 response = client.create_table(
-    TableName='test_ffly_poem_2',
+    TableName='test_ffly_poem',
     AttributeDefinitions=[
         {
             'AttributeName': 'id1',
@@ -31,7 +31,7 @@ response = client.create_table(
     ],
     GlobalSecondaryIndexes=[
         {
-            'IndexName': 'reverse',
+            'IndexName': 'reverse_edge',
             'KeySchema': [
                 {
                     'AttributeName': 'id2',
@@ -41,19 +41,18 @@ response = client.create_table(
             'Projection': {
                 'ProjectionType': 'INCLUDE',
                 'NonKeyAttributes': [
-                    'id1_data',
                     'id2_data',
                 ]
             },
             'ProvisionedThroughput': {
-                'ReadCapacityUnits': 200,
-                'WriteCapacityUnits': 150,
+                'ReadCapacityUnits': 2,
+                'WriteCapacityUnits': 1,
             }
         },
     ],
     ProvisionedThroughput={
-        'ReadCapacityUnits': 200,
-        'WriteCapacityUnits': 150
+        'ReadCapacityUnits': 2,
+        'WriteCapacityUnits': 1,
     },
 )
 

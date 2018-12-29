@@ -2,9 +2,6 @@
 #This script will start the development environment for you.
 set -e
 
-BOT=$1
-
-
 docker run \
   -it --rm \
   --name ffly-poem-dev-env  \

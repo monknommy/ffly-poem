@@ -66,7 +66,7 @@ def parse_all():
 
 def fill():
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('test_ffly_poem_2')
+    table = dynamodb.Table('test_ffly_poem')
     with table.batch_writer() as batch:
         for poem in poems.values():
             batch.put_item(Item=poem.get_dynamodb_node())
