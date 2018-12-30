@@ -15,7 +15,17 @@ RUN  apt-get install -y python3-pip
 # peewee for sqllite
 RUN python -m pip install  --upgrade peewee
 
-# AWS setup
-RUN python -m pip install boto3 #aws python sdk
+# AWS Python SDK
+RUN python -m pip install boto3
+
+#curl for later package installation.
+RUN apt-get install -y curl
+
+# nodejs 11.x
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+&& apt-get install -y nodejs
+
+#serverless
+RUN npm install -g serverless
 
 CMD [ "/bin/bash" ]
