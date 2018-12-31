@@ -1,11 +1,28 @@
-'use strict';
+'use strict'; // Todo shawn, use ES6 format.
 
-module.exports.graphql = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
+const { ApolloServer, gql } = require('apollo-server-lambda');
+
+// Construct a schema, using GraphQL schema language
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: () => 'Hello world!',
+  },
 };
+
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers,  
+  playground: {
+    endpoint: '/dev/graphql', // todo shawn figure out how to set stage.
+  }
+});
+
+exports.graphql = server.createHandler(
+);

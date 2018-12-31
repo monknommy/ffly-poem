@@ -18,14 +18,14 @@ RUN python -m pip install  --upgrade peewee
 # AWS Python SDK
 RUN python -m pip install boto3
 
-#curl for later package installation.
+# curl for nodejs
 RUN apt-get install -y curl
 
 # nodejs 11.x
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 && apt-get install -y nodejs
 
-#serverless
+# serverless
 RUN npm install -g serverless
 
 CMD [ "/bin/bash" ]

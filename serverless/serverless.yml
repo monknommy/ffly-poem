@@ -10,6 +10,9 @@ functions:
   graphql:
     handler: handler.graphql
     events:
-      - http:
-          path: graphql
-          method: get
+    - http:
+        path: graphql
+        method: post
+    - http:
+        path: graphql
+        method: get
