@@ -1,28 +1,16 @@
-'use strict'; // Todo shawn, use ES6 format.
+'use strict'; 
+// Todo shawn, use ES6 format. install babel?
 
 const { ApolloServer, gql } = require('apollo-server-lambda');
-
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
+const { schema } = require('./schema');
+const { resolvers } = require('./resolvers');
 
 const server = new ApolloServer({ 
-  typeDefs, 
-  resolvers,  
+  typeDefs: schema, 
+  resolvers: resolvers,  
   playground: {
     endpoint: '/dev/graphql', // todo shawn figure out how to set stage.
   }
 });
 
-exports.graphql = server.createHandler(
-);
+exports.graphql = server.createHandler();
