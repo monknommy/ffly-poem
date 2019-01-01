@@ -4,6 +4,7 @@ set -e
 
 docker run \
   -it --rm \
+  -p 4000:4000 \
   --name ffly-poem-dev-env  \
   --mount type=bind,source="$(pwd)",target=/ffly-poem \
   --mount type=bind,source="$(pwd)/.aws",target=/root/.aws \

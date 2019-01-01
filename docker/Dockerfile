@@ -21,11 +21,14 @@ RUN python -m pip install boto3
 # curl for nodejs
 RUN apt-get install -y curl
 
-# nodejs 11.x
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+# nodejs v8.15  to simulate lambda runtime v8.10
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 && apt-get install -y nodejs
 
-# serverless
+# Serverless
 RUN npm install -g serverless
+
+# Expose port 4000, map this at runtime.
+EXPOSE 4000
 
 CMD [ "/bin/bash" ]
