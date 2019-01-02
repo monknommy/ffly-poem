@@ -3,12 +3,12 @@ service: ffly-poem
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-west-1 #serverless doesn't respect region in .aws/config
+  region: us-west-1 # serverless doesn't respect region in .aws/config
   profile: serverless
 
 functions:
   graphql:
-    handler: handler.graphql
+    handler: graphql_handler.handler
     events:
     - http:
         path: graphql
@@ -16,3 +16,9 @@ functions:
     - http:
         path: graphql
         method: get
+  app:
+    handler: app_handler.handler
+    events:
+    - http:
+        path: /{proxy+} # This will forward everything to app.
+        method: any
