@@ -28,7 +28,10 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 # Serverless
 RUN npm install -g serverless
 
-# Expose port 4000, map this at runtime.
+# Expose port for local server. 
 EXPOSE 4000
+
+# Expose port for create-react-app
+EXPOSE 3000
 
 CMD [ "/bin/bash" ]
