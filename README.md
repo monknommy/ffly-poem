@@ -42,16 +42,13 @@ cd ..
 ./start_dev_env.sh
 
 # populate node modules
-cd ..
-cd client/poem-web
+cd /ffly-poem/client/poem-web
 npm install 
 
-cd ../..
-cd serverless
+cd /ffly-poem/serverless
 npm install
 
-cd ..
-cd local-server
+cd /ffly-poem/local-server
 npm install
 ```
 now you should in a ubuntu container with all dependency setup correctly for you.
