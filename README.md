@@ -37,6 +37,19 @@ build Docker image:
 cd docker
 docker build -t ffly-poem-dev-env .
 ```
+Populate node modules:
+```bash
+cd client/poem-web
+npm install 
+
+cd serverless
+npm install
+
+cd local-server
+npm install
+```
+
+
 start:
 ```bash
 ./start_dev_env.sh
