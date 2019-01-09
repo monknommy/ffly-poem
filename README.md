@@ -36,22 +36,22 @@ build Docker image:
 ```bash
 cd docker
 docker build -t ffly-poem-dev-env .
-```
-Populate node modules:
-```bash
+
+#start devlopment env
+cd ..
+./start_dev_env.sh
+
+# populate node modules
+cd ..
 cd client/poem-web
 npm install 
 
+cd ../..
 cd serverless
 npm install
 
+cd ..
 cd local-server
 npm install
-```
-
-
-start:
-```bash
-./start_dev_env.sh
 ```
 now you should in a ubuntu container with all dependency setup correctly for you.
