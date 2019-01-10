@@ -25,5 +25,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "serverless-s3-sync": "^1.7.1"
+  }
 }
