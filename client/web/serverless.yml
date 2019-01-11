@@ -1,0 +1,49 @@
+service: ffly-poem-client-web
+
+plugins:
+  - serverless-s3-sync
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-west-1 # serverless doesn't respect region in .aws/config
+  profile: serverless
+
+custom:
+  s3Sync:
+    - bucketName: ${self:service}
+#      bucketPrefix: ${self:provider.stage} #todo shawn add stage. dev/prod as prefix.
+      localDir: build # Sync build folder.
+
+resources:
+  Resources:
+    FFlyPoemClientWebS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}
+        WebsiteConfiguration:
+            IndexDocument: index.html
+            ErrorDocument: index.html
+
+    FFlyPoemClientWebS3BucketPolicy: # This grand bucket public access.
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: FFlyPoemClientWebS3Bucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": FFlyPoemClientWebS3Bucket
+                    },
+                    "/*"
+                  ]
+                ]
