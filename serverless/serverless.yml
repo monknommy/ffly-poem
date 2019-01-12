@@ -4,6 +4,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: us-west-1 # serverless doesn't respect region in .aws/config
+  stage: ${opt:stage, 'dev'}
   profile: serverless
 
 functions:

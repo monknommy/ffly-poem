@@ -1,5 +1,4 @@
 'use strict'; 
-// Todo shawn, use ES6 format. install babel?
 
 const { ApolloServer, gql } = require('apollo-server-lambda');
 const { schema } = require('./schema');
