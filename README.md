@@ -25,21 +25,19 @@ A poem view web app.
 * **Docker**: 用Docker来搭配开发环境，抛弃VM。
 
 # Setup
-preprequirements: 
-* Docker installed: https://www.docker.com/products/docker-engine
-* AWS IAM User: https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/signup-create-iam-user.html
-  * ffly-poem/.aws will get mapped to ~/.aws in container, so all config goes there.
-  * Required permissions: dynamo admin.
+## Preprequirements: 
+* Docker: https://www.docker.com/
+* Serverless: https://serverless.com/
+* AWS Account: https://aws.amazon.com/
 
-## Setup Development Environment
+## Setup Build Environment
 build Docker image:
 ```bash
-cd docker
+cd build-env
 docker build -t ffly-poem-dev-env .
 
 #start devlopment env
-cd ..
-./start_dev_env.sh
+./start.sh
 
 # populate node modules
 cd /ffly-poem/client/poem-web
