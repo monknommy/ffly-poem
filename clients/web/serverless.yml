@@ -6,7 +6,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-west-1 # serverless doesn't respect region in .aws/config
+  region: us-west-1
   profile: serverless
 
 custom:
@@ -25,7 +25,8 @@ resources:
             IndexDocument: index.html
             ErrorDocument: index.html
 
-    FFlyPoemClientWebS3BucketPolicy: # This grand bucket public access.
+    # This grant bucket public access.
+    FFlyPoemClientWebS3BucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
         Bucket:

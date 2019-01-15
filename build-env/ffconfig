@@ -1,0 +1,10 @@
+# Configs in this file will be imported as environment variables. 
+
+# serverless stage.
+STAGE=dev
+
+# node env to make sure third party library is using prod config.
+NODE_ENV=production
+
+# For client.
+REACT_APP_GRAPHQL_ENDPOINT=https://0zjolgg184.execute-api.us-west-1.amazonaws.com/dev/graphql 

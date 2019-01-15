@@ -4,11 +4,16 @@ const { ApolloServer, gql } = require('apollo-server-lambda');
 const { schema } = require('./schema');
 const { resolvers } = require('./resolvers');
 
+const stage = process.env.STAGE;
+let endpoint = '/graphql';
+if (stage == 'dev') {
+  endpoint = '/dev/graphql';
+}
 const server = new ApolloServer({ 
   typeDefs: schema, 
   resolvers: resolvers,  
   playground: {
-    endpoint: '/dev/graphql', // todo shawn figure out how to set stage.
+    endpoint: endpoint,
   }
 });
 

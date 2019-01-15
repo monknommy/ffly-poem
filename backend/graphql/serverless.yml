@@ -1,11 +1,14 @@
-service: ffly-poem
+service: ffly-poem-graphql
 
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-west-1 # serverless doesn't respect region in .aws/config
-  stage: ${opt:stage, 'dev'}
+  region: us-west-1
+  stage: dev #${env:STAGE}
   profile: serverless
+  environment: 
+    STAGE: ${env:STAGE}
+#    NODE_ENV: ${env:NODE_ENV}  todo shawn, why this breaks graphql playground?
 
 functions:
   graphql:
