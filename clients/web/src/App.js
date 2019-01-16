@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 
 const client = new ApolloClient({
-  uri: "https://0zjolgg184.execute-api.us-west-1.amazonaws.com/dev/graphql"
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT 
 });
 
 client

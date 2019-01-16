@@ -7,4 +7,4 @@ STAGE=dev
 GRAPHQL_PLAYGROUND_ENDPOINT=/dev/graphql
 
 # react web app.
-REACT_APP_GRAPHQL_ENDPOINT=https://0zjolgg184.execute-api.us-west-1.amazonaws.com/dev/graphql 
+REACT_APP_GRAPHQL_ENDPOINT=https://er89gd50b6.execute-api.us-west-1.amazonaws.com/dev/graphql
