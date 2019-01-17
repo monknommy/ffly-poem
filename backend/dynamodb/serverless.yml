@@ -1,0 +1,42 @@
+service: ffly-poem-dynamodb
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ${env:AWS_DEFAULT_REGION}
+  stage: ${env:STAGE}
+  profile: serverless
+  environment: 
+    STAGE: ${env:STAGE}
+
+resources:
+  Resources:
+    FFlyPoemDynamodbMeta:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:STAGE}-ffly-poem-meta
+        AttributeDefinitions:
+          - AttributeName: id1
+            AttributeType: S
+          - AttributeName: id2
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id1
+            KeyType: HASH
+          - AttributeName: id2
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: 'reverse_edge'
+            KeySchema:
+              - AttributeName: id2
+                KeyType: HASH
+            Projection:
+              ProjectionType: 'INCLUDE'
+              NonKeyAttributes:
+                - 'id2_data'
+            ProvisionedThroughput:
+              ReadCapacityUnits: 2
+              WriteCapacityUnits: 1

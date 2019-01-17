@@ -1,6 +1,7 @@
 import boto3
 from peewee import *
 from playhouse.sqlite_ext import SqliteExtDatabase
+import sys
 
 sqlite_db = SqliteExtDatabase('poem.db')
 class BaseModel(Model):
@@ -66,7 +67,7 @@ def parse_all():
 
 def fill():
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('test_ffly_poem')
+    table = dynamodb.Table('dev-ffly-poem-meta')
     with table.batch_writer() as batch:
         for poem in poems.values():
             batch.put_item(Item=poem.get_dynamodb_node())
