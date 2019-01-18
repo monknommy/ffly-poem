@@ -6,21 +6,22 @@ plugins:
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-west-1
+  region: ${env:AWS_DEFAULT_REGION}
+  stage: ${env:STAGE}
   profile: serverless
 
 custom:
+  bucketName: ${env:STAGE}-ffly-poem-client-web
   s3Sync:
-    - bucketName: ${self:service}
-#      bucketPrefix: ${self:provider.stage} #todo shawn add stage. dev/prod as prefix.
-      localDir: build # Sync build folder.
+    - bucketName: ${self:custom.bucketName}
+      localDir: build # Sync build folder only.
 
 resources:
   Resources:
     FFlyPoemClientWebS3Bucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:service}
+        BucketName: ${self:custom.bucketName}
         WebsiteConfiguration:
             IndexDocument: index.html
             ErrorDocument: index.html
