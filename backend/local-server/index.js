@@ -2,11 +2,15 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const { schema } = require('/ffly-poem/backend/graphql/schema');
 const { resolvers } = require('/ffly-poem/backend/graphql/resolvers');
-//const { resolvers } = require('./resolvers');
+const aws_sdk = require("aws-sdk");
+
+console.log('shawnxx aws config', process.env.AWS_DEFAULT_REGION);
+aws_sdk.config.update({region: process.env.AWS_DEFAULT_REGION});
 
 const server = new ApolloServer({ 
     typeDefs: schema,
     resolvers: resolvers,
+    context: {aws_sdk: aws_sdk},
 });
 
 const app = express();

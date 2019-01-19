@@ -1,21 +1,21 @@
 'use strict'; 
 
-const AWS = require("aws-sdk");
-//AWS.config.update({region: 'us-west-2'});
-
-function queryPoem(poem_id) {
-  const docClient = new AWS.DynamoDB.DocumentClient();
+async function queryPoem(poem_id, aws_sdk) {
+  const docClient = new aws_sdk.DynamoDB.DocumentClient();
   const params = {
       TableName: 'dev-ffly-poem-meta', // Todo shawn put this table in ffconfig.
-      Key: {'id1': poem_id}
+      Key: {
+          id1: poem_id,
+          id2: poem_id,
+        }
   };
 
-  const data = docClient.get(params).promise();
+  const data = await docClient.get(params).promise();
   //data && data.Item && data.Item.payload
   console.log(data);
 }
 
-function resolvePoemInQuery(args) {
+async function resolvePoemInQuery(parent, args, context, info) {
     const poem_id = args.poem_id;
     const poem = {
         poem_id: poem_id,
@@ -23,10 +23,11 @@ function resolvePoemInQuery(args) {
         id2: "author_haha",
         id2_data: "data",
     }
+    await queryPoem(poem_id, context.aws_sdk);
     return poem;
 }
 
-function resolveAuthorInPoem(parent) {
+function resolveAuthorInPoem(parent, args, context, info) {
     const author = {
         author_id: parent.id2,
         name: parent.id2_data,
@@ -36,10 +37,10 @@ function resolveAuthorInPoem(parent) {
 
 exports.resolvers = {
     Query: {
-        poem: (parent, args, context, info) => resolvePoemInQuery(args),
+        poem: (parent, args, context, info) => resolvePoemInQuery(parent, args, context, info),
     },
 
     Poem: {
-        author: (parent, args, context, info) => resolveAuthorInPoem(parent),
+        author: (parent, args, context, info) => resolveAuthorInPoem(parent, args, context, info),
     },
   };
