@@ -1,6 +1,20 @@
 'use strict'; 
 
-// Todo shawn, type this.
+const AWS = require("aws-sdk");
+//AWS.config.update({region: 'us-west-2'});
+
+function queryPoem(poem_id) {
+  const docClient = new AWS.DynamoDB.DocumentClient();
+  const params = {
+      TableName: 'dev-ffly-poem-meta', // Todo shawn put this table in ffconfig.
+      Key: {'id1': poem_id}
+  };
+
+  const data = docClient.get(params).promise();
+  //data && data.Item && data.Item.payload
+  console.log(data);
+}
+
 function resolvePoemInQuery(args) {
     const poem_id = args.poem_id;
     const poem = {
