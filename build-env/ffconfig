@@ -2,7 +2,7 @@
 
 # serverless stage.
 STAGE=dev
-AWS_DEFAULT_REGION=us-west-1
+FFLY_AWS_REGION=us-west-1
 
 # Relative path for graphql playground.
 GRAPHQL_PLAYGROUND_ENDPOINT=/dev/graphql

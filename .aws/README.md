@@ -9,4 +9,4 @@ aws_access_key_id = YOUR_AWS_KEY_ID
 aws_secret_access_key = YOUR_AWS_KEY
 ```
 
-config file is not used since serverless doesn't read from it. Instead AWS_DEFAULT_REGION env is set for both serverless and boto3.
+config file is not used since serverless doesn't read from it. Instead FFLY_AWS_REGION env is set for both serverless and boto3.

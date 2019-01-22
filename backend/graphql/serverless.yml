@@ -3,13 +3,13 @@ service: ffly-poem-graphql
 provider:
   name: aws
   runtime: nodejs8.10
-  region: ${env:AWS_DEFAULT_REGION}
+  region: ${env:FFLY_AWS_REGION}
   stage: ${env:STAGE}
   profile: serverless
   environment: 
     STAGE: ${env:STAGE}
     GRAPHQL_PLAYGROUND_ENDPOINT: ${env:GRAPHQL_PLAYGROUND_ENDPOINT}
-    AWS_DEFAULT_REGION: ${env:AWS_DEFAULT_REGION}
+    FFLY_AWS_REGION: ${env:FFLY_AWS_REGION}
 
 functions:
   graphql:

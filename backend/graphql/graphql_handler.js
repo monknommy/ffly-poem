@@ -5,7 +5,7 @@ const { schema } = require('./schema');
 const { resolvers } = require('./resolvers');
 const aws_sdk = require("aws-sdk");
 
-aws_sdk.config.update({region: process.env.AWS_DEFAULT_REGION});
+aws_sdk.config.update({region: process.env.FFLY_AWS_REGION});
 
 const server = new ApolloServer({ 
   typeDefs: schema, 

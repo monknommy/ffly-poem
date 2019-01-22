@@ -67,7 +67,7 @@ def parse_all():
 
 def fill():
     db_name = f"{os.environ['STAGE']}-ffly-poem-meta"
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = boto3.resource('dynamodb', region_name=os.environ['FFLY_AWS_REGION'])
     table = dynamodb.Table(db_name)
     with table.batch_writer() as batch:
         for poem in poems.values():

@@ -11,8 +11,10 @@ async function queryPoem(poem_id, aws_sdk) {
   };
 
   const data = await docClient.get(params).promise();
-  //data && data.Item && data.Item.payload
-  console.log(data);
+//data && data.Item && data.Item.payload
+    data.Item.poem_id = data.Item.id1;
+  console.log(data.Item);
+  return data.Item;
 }
 
 async function resolvePoemInQuery(parent, args, context, info) {
@@ -23,8 +25,8 @@ async function resolvePoemInQuery(parent, args, context, info) {
         id2: "author_haha",
         id2_data: "data",
     }
-    await queryPoem(poem_id, context.aws_sdk);
-    return poem;
+return await queryPoem(poem_id, context.aws_sdk);
+    //return poem;
 }
 
 function resolveAuthorInPoem(parent, args, context, info) {
