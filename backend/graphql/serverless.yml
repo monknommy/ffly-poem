@@ -10,6 +10,14 @@ provider:
     STAGE: ${env:STAGE}
     GRAPHQL_PLAYGROUND_ENDPOINT: ${env:GRAPHQL_PLAYGROUND_ENDPOINT}
     FFLY_AWS_REGION: ${env:FFLY_AWS_REGION}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: # Gives permission to DynamoDB tables.
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:${env:FFLY_AWS_REGION}:*:*"
 
 functions:
   graphql:
