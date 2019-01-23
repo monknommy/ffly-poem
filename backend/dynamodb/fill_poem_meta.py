@@ -18,7 +18,7 @@ class Author(BaseModel):
     def get_dynamodb_node(self):
         dynamodb_id = 'AUTHOR_' + self.id
         result = {
-            'id1': dynamodb_id,
+            'id': dynamodb_id,
             'id2': dynamodb_id,
         }
         if self.name is not None and len(self.name) > 0:
@@ -40,7 +40,7 @@ class Poem(BaseModel):
     def get_dynamodb_node(self):
         dynamodb_id = 'POEM_' + self.id
         result = {
-            'id1': dynamodb_id,
+            'id': dynamodb_id,
             'id2': dynamodb_id,
         }
         if self.content is not None and len(self.content) > 0:

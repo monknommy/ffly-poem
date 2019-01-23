@@ -16,12 +16,12 @@ resources:
       Properties:
         TableName: ${env:STAGE}-ffly-poem-meta
         AttributeDefinitions:
-          - AttributeName: id1
+          - AttributeName: id
             AttributeType: S
           - AttributeName: id2
             AttributeType: S
         KeySchema:
-          - AttributeName: id1
+          - AttributeName: id
             KeyType: HASH
           - AttributeName: id2
             KeyType: RANGE
