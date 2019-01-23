@@ -10,6 +10,7 @@ provider:
     STAGE: ${env:STAGE}
     GRAPHQL_PLAYGROUND_ENDPOINT: ${env:GRAPHQL_PLAYGROUND_ENDPOINT}
     FFLY_AWS_REGION: ${env:FFLY_AWS_REGION}
+    AWS_DYNAMODB_META_TABLE: ${env:AWS_DYNAMODB_META_TABLE}
   iamRoleStatements:
     - Effect: Allow
       Action: # Gives permission to DynamoDB tables.

@@ -14,7 +14,7 @@ resources:
     FFlyPoemDynamodbMeta:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${env:STAGE}-ffly-poem-meta
+        TableName: ${env:AWS_DYNAMODB_META_TABLE}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S

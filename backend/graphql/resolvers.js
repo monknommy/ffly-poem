@@ -4,7 +4,7 @@
 async function resolvePoemInQuery(parent, args, context, info) {
   //todo shawn check is this really poem id?
   const params = {
-    TableName: 'dev-ffly-poem-meta', // Todo shawn put this table in ffconfig.
+    TableName: process.env.AWS_DYNAMODB_META_TABLE, // Todo shawn put this table in ffconfig.
     Key: {
         id: args.id,
         id2: args.id,

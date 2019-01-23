@@ -9,5 +9,5 @@ docker run \
   --name ffly-poem-dev-env  \
   --mount type=bind,source="$(pwd)/../",target=/ffly-poem \
   --mount type=bind,source="$(pwd)/../.aws",target=/root/.aws \
-  --env-file ./ffconfig \
+  --env-file ./ffconfig.env \
   ffly-poem-dev-env
