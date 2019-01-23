@@ -2,11 +2,11 @@ const { gql } = require('apollo-server-lambda');
 
 const schema = gql`
 type Query {
-    poem(poem_id: String!): Poem!
+    poem(id: String!): Poem!
 }
 
 type Poem {
-    poem_id: String!
+    id: String!
     content: String!
     name: String
     genre: String
@@ -15,7 +15,7 @@ type Poem {
 }
 
 type Author {
-    author_id: String!
+    id: String!
     name: String
     dynasty: String
 }

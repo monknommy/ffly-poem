@@ -10,7 +10,9 @@ aws_sdk.config.update({region: process.env.FFLY_AWS_REGION});
 const server = new ApolloServer({ 
   typeDefs: schema, 
   resolvers: resolvers,  
-  context: {aws_sdk: aws_sdk},
+  context: () => ({
+		dynamodb: new aws_sdk.DynamoDB.DocumentClient()
+	}),
   playground: {
     endpoint: process.env.GRAPHQL_PLAYGROUND_ENDPOINT,
   }
