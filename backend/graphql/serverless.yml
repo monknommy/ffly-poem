@@ -19,12 +19,13 @@ provider:
       Resource: "arn:aws:dynamodb:${env:FFLY_AWS_REGION}:*:*"
 
 custom:
+  # This will forward all env variables to lambda.
   dotenv:
     path: /ffly-poem/ffconfig.env
-    
+
 functions:
   graphql:
-    handler: graphql_handler.handler
+    handler: src/graphql_handler.handler
     events:
     - http:
         path: graphql
