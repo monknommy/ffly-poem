@@ -6,8 +6,8 @@ docker run \
   -it --rm \
   -p 4000:4000 \
   -p 3000:3000 \
-  --name ffly-poem-dev-env  \
+  --name ffly-poem-development \
   --mount type=bind,source="$(pwd)/../",target=/ffly-poem \
   --mount type=bind,source="$(pwd)/../.aws",target=/root/.aws \
-  --env-file ./ffconfig.env \
-  ffly-poem-dev-env
+  --env-file ../ffconfig.env \
+  ffly-poem-development

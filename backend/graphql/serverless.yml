@@ -1,16 +1,14 @@
 service: ffly-poem-graphql
 
+plugins:
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
   runtime: nodejs8.10
   region: ${env:FFLY_AWS_REGION}
   stage: ${env:STAGE}
   profile: serverless
-  environment: 
-    STAGE: ${env:STAGE}
-    GRAPHQL_PLAYGROUND_ENDPOINT: ${env:GRAPHQL_PLAYGROUND_ENDPOINT}
-    FFLY_AWS_REGION: ${env:FFLY_AWS_REGION}
-    AWS_DYNAMODB_META_TABLE: ${env:AWS_DYNAMODB_META_TABLE}
   iamRoleStatements:
     - Effect: Allow
       Action: # Gives permission to DynamoDB tables.
@@ -20,6 +18,10 @@ provider:
         - dynamodb:GetItem
       Resource: "arn:aws:dynamodb:${env:FFLY_AWS_REGION}:*:*"
 
+custom:
+  dotenv:
+    path: /ffly-poem/ffconfig.env
+    
 functions:
   graphql:
     handler: graphql_handler.handler
