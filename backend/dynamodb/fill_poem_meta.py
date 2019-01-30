@@ -19,7 +19,7 @@ class Author(BaseModel):
         dynamodb_id = 'AUTHOR_' + self.id
         result = {
             'id': dynamodb_id,
-            'id2': dynamodb_id,
+            'id2': "SELF",
         }
         if self.name is not None and len(self.name) > 0:
             result['name'] = self.name
@@ -41,7 +41,7 @@ class Poem(BaseModel):
         dynamodb_id = 'POEM_' + self.id
         result = {
             'id': dynamodb_id,
-            'id2': dynamodb_id,
+            'id2': "SELF",
         }
         if self.content is not None and len(self.content) > 0:
             result['content'] = self.content
@@ -56,13 +56,28 @@ class Poem(BaseModel):
 
 authors = {}
 poems = {}
+author_in_poems = {}
+
+def get_author_in_poem(poem, author):
+  edge_data = {
+    'name': author.name
+  }
+  result = {
+    'id': "POEM_" + poem.id,
+    'id2': "AUTHOR:" + poem.author_id,
+    'id2_data': edge_data,
+  }
+  return result
+
+
 def parse_all():
     sqlite_db.connect()
     for poem in Poem.select():
         poems[poem.id] = poem
         if poem.author_id not in authors:
-            author = Author.get(Author.id== poem.author_id)
+            author = Author.get(Author.id == poem.author_id)
             authors[poem.author_id] = author
+        author_in_poems[poem.id] = get_author_in_poem(poem, authors[poem.author_id])
     
 
 def fill():
@@ -74,6 +89,8 @@ def fill():
             batch.put_item(Item=poem.get_dynamodb_node())
         for author in authors.values():
             batch.put_item(Item=author.get_dynamodb_node())
+        for author_in_poem in author_in_poems.values():
+            batch.put_item(Item=author_in_poem)
 
 def print_data():
     for author in authors.values():
