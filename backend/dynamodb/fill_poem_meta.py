@@ -64,7 +64,7 @@ def get_author_in_poem(poem, author):
   }
   result = {
     'id': "POEM_" + poem.id,
-    'id2': "AUTHOR:" + poem.author_id,
+    'id2': "AUTHOR:AUTHOR_" + poem.author_id,
     'id2_data': edge_data,
   }
   return result
