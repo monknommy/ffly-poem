@@ -18,6 +18,7 @@ type Author {
     id: String!
     name: String
     dynasty: String
+    about: String
 }
 `;
 

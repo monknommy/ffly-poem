@@ -15,23 +15,19 @@ async function queryNodeByID(dynamodb, id) {
   }
   for (var item_key in data.Items) { // use map maybe todo shawn
     const item = data.Items[item_key];
-    console.log(item);
-    if (item.id2 === 'SELF') { // a node
+    if (item.edge === 'SELF') { // a node
       for (var key in item) {
         node[key] = item[key]
       }
     } else {
-      const relation = item.id2.split(':')[0]
-      const neighbor_id = item.id2.split(':')[1];
-      console.log(node);
-      node.edges[relation] = {
-        id: neighbor_id
-      }
-      for (var key in item.id2_data) {
-        node.edges[relation][key] = item.id2_data[key]
-      }
+      const relation = item.edge.split(':')[0]
+      const neighbor_id = item.edge.split(':')[1];
+      // todo null check
+      node.edges[relation] = [neighbor_id];
     }
   }
+
+  console.log('shawnxx requested node ', node);
   return node;
 }
 
@@ -48,18 +44,15 @@ async function resolvePoemInQuery(parent, args, context, info) {
       ':poem_id': poem_id,
     }
   };
-
-//  const data = await context.dynamodb.query(params).promise();
   const data = await queryNodeByID(context.dynamodb, poem_id);
-  console.log('here is finaial');
-  console.log(data);
-
   return data;
 }
 
-function resolveAuthorInPoem(parent, args, context, info) {
+async function resolveAuthorInPoem(parent, args, context, info) {
   const data = parent.edges['AUTHOR'];
-  return data; //todo shawn what should happen when querying other fields?
+  // todo null check
+  const author_id = data[0];
+  return await queryNodeByID(context.dynamodb, author_id);
 }
 
 exports.resolvers = {

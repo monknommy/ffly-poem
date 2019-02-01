@@ -18,25 +18,23 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
-          - AttributeName: id2
+          - AttributeName: edge
             AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-          - AttributeName: id2
+          - AttributeName: edge
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 2
           WriteCapacityUnits: 1
         GlobalSecondaryIndexes:
-          - IndexName: 'reverse_edge'
+          - IndexName: 'index_by_edge'
             KeySchema:
-              - AttributeName: id2
+              - AttributeName: edge
                 KeyType: HASH
             Projection:
-              ProjectionType: 'INCLUDE'
-              NonKeyAttributes:
-                - 'id2_data'
+              ProjectionType: 'KEYS_ONLY'
             ProvisionedThroughput:
               ReadCapacityUnits: 2
               WriteCapacityUnits: 1

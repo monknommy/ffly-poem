@@ -19,7 +19,7 @@ class Author(BaseModel):
         dynamodb_id = 'AUTHOR_' + self.id
         result = {
             'id': dynamodb_id,
-            'id2': "SELF",
+            'edge': "SELF",
         }
         if self.name is not None and len(self.name) > 0:
             result['name'] = self.name
@@ -41,7 +41,7 @@ class Poem(BaseModel):
         dynamodb_id = 'POEM_' + self.id
         result = {
             'id': dynamodb_id,
-            'id2': "SELF",
+            'edge': "SELF",
         }
         if self.content is not None and len(self.content) > 0:
             result['content'] = self.content
@@ -59,16 +59,10 @@ poems = {}
 author_in_poems = {}
 
 def get_author_in_poem(poem, author):
-  edge_data = {
-    'name': author.name
-  }
-  result = {
+  return {
     'id': "POEM_" + poem.id,
-    'id2': "AUTHOR:AUTHOR_" + poem.author_id,
-    'id2_data': edge_data,
+    'edge': "AUTHOR:AUTHOR_" + poem.author_id
   }
-  return result
-
 
 def parse_all():
     sqlite_db.connect()
@@ -81,7 +75,7 @@ def parse_all():
     
 
 def fill():
-    db_name = f"{os.environ['STAGE']}-ffly-poem-meta"
+    db_name = {os.environ['AWS_DYNAMODB_META_TABLE']}
     dynamodb = boto3.resource('dynamodb', region_name=os.environ['FFLY_AWS_REGION'])
     table = dynamodb.Table(db_name)
     with table.batch_writer() as batch:
