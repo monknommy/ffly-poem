@@ -29,6 +29,8 @@ RUN python -m pip install boto3
 # Serverless.
 RUN npm install -g serverless
 
+RUN npm install -g typescript
+
 # Expose port for local server. 
 EXPOSE 4000
 

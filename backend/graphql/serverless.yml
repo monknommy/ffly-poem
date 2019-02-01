@@ -3,6 +3,11 @@ service: ffly-poem-graphql
 plugins:
   - serverless-dotenv-plugin
 
+package:
+  include:
+  - node_modules
+  - generated
+  
 provider:
   name: aws
   runtime: nodejs8.10
@@ -25,7 +30,7 @@ custom:
 
 functions:
   graphql:
-    handler: src/graphql_handler.handler
+    handler: generated/graphql_handler.handler
     events:
     - http:
         path: graphql
