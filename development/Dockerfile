@@ -31,6 +31,8 @@ RUN npm install -g serverless
 
 RUN npm install -g typescript
 
+RUN npm install -g apollo
+
 # Expose port for local server. 
 EXPOSE 4000
 

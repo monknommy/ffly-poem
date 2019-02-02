@@ -6,7 +6,7 @@ type Query {
 }
 
 type Poem {
-    id: String!
+    id: String! 
     content: String!
     name: String
     genre: String
@@ -15,7 +15,7 @@ type Poem {
 }
 
 type Author {
-    id: String!
+    id: String! 
     name: String
     dynasty: String
     about: String
