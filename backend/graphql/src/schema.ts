@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server-lambda');
+import { gql } from 'apollo-server-lambda';
 
-const schema = gql`
+export const schema = gql`
 type Query {
     poem(id: String!): Poem
 }
@@ -21,5 +21,3 @@ type Author {
     about: String
 }
 `;
-
-exports.schema = schema;

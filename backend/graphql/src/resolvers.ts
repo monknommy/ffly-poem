@@ -55,7 +55,7 @@ async function resolveAuthorInPoem(parent, args, context, info) {
   return await queryNodeByID(context.dynamodb, author_id);
 }
 
-exports.resolvers = {
+export const resolvers = {
   Query: {
     poem: (parent, args, context, info) => resolvePoemInQuery(parent, args, context, info),
   },

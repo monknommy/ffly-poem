@@ -8,6 +8,7 @@
     "graphql": "^14.0.2"
   },
   "devDependencies": {
+    "aws-sdk": "^2.395.0",
     "serverless-dotenv-plugin": "^2.0.1"
   }
 }
