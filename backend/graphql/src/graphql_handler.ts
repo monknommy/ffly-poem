@@ -11,7 +11,7 @@ const server = new ApolloServer({
   typeDefs: schema,
   resolvers: resolvers,
   context: () => ({
-    dynamodb: new DynamoDB.DocumentClient()
+    dbClient: new DynamoDB.DocumentClient()
   }),
   playground: {
     endpoint: process.env.GRAPHQL_PLAYGROUND_ENDPOINT,

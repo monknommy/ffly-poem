@@ -1,66 +1,102 @@
 'use strict';
 
-async function queryNodeByID(dynamodb, id) {
+import { DynamoDB } from "aws-sdk";
+
+type DocumentClient = DynamoDB.DocumentClient;
+type FFID = string;
+
+interface FFNode {
+  [property: string]: any
+  edges: {
+    [relationship: string]: [FFID] | undefined // Either not existed or an array with FFID inside.
+  }
+}
+
+interface GraphQLContext {
+  dbClient: DocumentClient
+}
+
+function ffid(id: string): FFID {
+  const [nodeType, nodeID] = id.split('_');
+  if (!nodeType || !nodeID) {
+    throw ("Invalid FFID {id}");
+  }
+  //todo shawn, list all supported node type in a const and check againest it.
+  return id;
+}
+
+function getEnvEnforce(key: string): string {
+  const result = process.env[key];
+  if (!result) {
+    throw ("Environment Variable ${key} Does not Existed!");
+  }
+  return result;
+}
+
+async function queryNodeByID(dbClient: DocumentClient, id: string): Promise<FFNode | null> {
   const params = {
-    TableName: process.env.AWS_DYNAMODB_META_TABLE,
+    TableName: getEnvEnforce('AWS_DYNAMODB_META_TABLE'),
     KeyConditionExpression: 'id = :id',
     ExpressionAttributeValues: {
       ':id': id,
     }
   };
 
-  const data = await dynamodb.query(params).promise();
-  const node = {
+  const data = await dbClient.query(params).promise();
+  const node: FFNode = {
     edges: {}
   }
-  for (var item_key in data.Items) { // use map maybe todo shawn
-    const item = data.Items[item_key];
+
+  if (!data.Items) {
+    return null;
+  }
+
+  data.Items.forEach(item => {
+    if (!item.edge) {
+      throw ('No edge existed in item');
+    }
     if (item.edge === 'SELF') { // a node
       for (var key in item) {
         node[key] = item[key]
       }
     } else {
-      const relation = item.edge.split(':')[0]
-      const neighbor_id = item.edge.split(':')[1];
-      // todo null check
-      node.edges[relation] = [neighbor_id];
+      const [relation, neighbor_id] = item.edge.split(':');
+      if (!relation || !neighbor_id) {
+        throw ('{item.edge} is not a valid edge, expect splitable by :');
+      }
+      node.edges[relation] = [ffid(neighbor_id)];
     }
-  }
+  });
 
   console.log('shawnxx requested node ', node);
   return node;
 }
 
-async function resolvePoemInQuery(parent, args, context, info) {
+async function resolvePoemInQuery(_parent: any, args: {id: FFID}, context: GraphQLContext, _info: any) {
   const poem_id = args.id;
-  if (!poem_id.startsWith('POEM')) {
+  if (!poem_id.startsWith('POEM')) { // todo shawn a FFNodeUtil to check node type.
     return null;
   }
 
-  const params = {
-    TableName: process.env.AWS_DYNAMODB_META_TABLE,
-    KeyConditionExpression: 'id = :poem_id',
-    ExpressionAttributeValues: {
-      ':poem_id': poem_id,
-    }
-  };
-  const data = await queryNodeByID(context.dynamodb, poem_id);
+  const data = await queryNodeByID(context.dbClient, poem_id);
   return data;
 }
 
-async function resolveAuthorInPoem(parent, args, context, info) {
+async function resolveAuthorInPoem(parent: FFNode, _args: any, context: GraphQLContext, _info: any) {
   const data = parent.edges['AUTHOR'];
-  // todo null check
+  if (!data) {
+    return null;
+  }
   const author_id = data[0];
-  return await queryNodeByID(context.dynamodb, author_id);
+  return await queryNodeByID(context.dbClient, author_id);
 }
 
 export const resolvers = {
   Query: {
-    poem: (parent, args, context, info) => resolvePoemInQuery(parent, args, context, info),
+    poem: (parent: any, args: any, context: GraphQLContext, info: any) => resolvePoemInQuery(parent, args, context, info),
   },
 
   Poem: {
-    author: (parent, args, context, info) => resolveAuthorInPoem(parent, args, context, info),
+    author: (parent: any, args: any, context: GraphQLContext, info: any) => resolveAuthorInPoem(parent, args, context, info),
   },
 };

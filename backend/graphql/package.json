@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@types/aws-lambda": "^8.10.18",
+    "@types/graphql": "^14.0.5",
     "apollo-server-lambda": "^2.3.3",
     "graphql": "^14.0.2"
   },
   "devDependencies": {
+    "aws-lambda": "^0.1.2",
     "aws-sdk": "^2.395.0",
     "serverless-dotenv-plugin": "^2.0.1"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }
