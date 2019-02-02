@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "apollo-server-lambda": "^2.3.1",
-    "aws-serverless-express": "^3.3.5",
+    "apollo-server-lambda": "^2.3.3",
     "graphql": "^14.0.2"
   },
   "devDependencies": {
