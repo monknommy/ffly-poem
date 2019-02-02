@@ -21,7 +21,7 @@ function ffid(id: string): FFID {
   if (!nodeType || !nodeID) {
     throw ("Invalid FFID {id}");
   }
-  //todo shawn, list all supported node type in a const and check againest it.
+  // todo shawn, list all supported node type in a const and check againest it.
   return id;
 }
 
@@ -68,7 +68,6 @@ async function queryNodeByID(dbClient: DocumentClient, id: string): Promise<FFNo
     }
   });
 
-  console.log('shawnxx requested node ', node);
   return node;
 }
 
