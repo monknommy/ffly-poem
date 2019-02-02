@@ -71,7 +71,7 @@ async function queryNodeByID(dbClient: DocumentClient, id: string): Promise<FFNo
   return node;
 }
 
-async function resolvePoemInQuery(_parent: any, args: {id: FFID}, context: GraphQLContext, _info: any) {
+async function resolvePoemInQuery(_parent: any, args: { id: FFID }, context: GraphQLContext, _info: any) {
   const poem_id = args.id;
   if (!poem_id.startsWith('POEM')) { // todo shawn a FFNodeUtil to check node type.
     return null;
