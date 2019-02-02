@@ -30,7 +30,7 @@ custom:
 
 functions:
   graphql:
-    handler: generated/graphql_handler.handler
+    handler: build/graphql_handler.handler
     events:
     - http:
         path: graphql

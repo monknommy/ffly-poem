@@ -4,6 +4,6 @@
       "src/**/*"
   ],
   "compilerOptions": {
-    "outDir": "generated"
+    "outDir": "build"
   }
 }
