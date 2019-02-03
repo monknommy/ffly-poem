@@ -1,12 +1,12 @@
 import ApolloClient from "apollo-boost";
 import React, { Component } from 'react';
 import gql from "graphql-tag";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, match } from "react-router-dom";
 
 import './App.css';
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT 
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
 });
 
 client
@@ -29,7 +29,7 @@ class App extends Component {
           <Route path="/poem/:id" component={Poem} />
           <Route path="/author/:id" component={Author} />
           <Route exact path="/" component={Home} />
-          </div>
+        </div>
       </Router>
     );
   }
@@ -43,8 +43,10 @@ function Home() {
   );
 }
 
-
-function Poem({ match }) {
+type PoemProps = {
+  match: match<{ id: string }>
+}
+function Poem({ match }: PoemProps) {
   return (
     <div>
       <h3>Poem ID: {match.params.id}</h3>
@@ -52,7 +54,10 @@ function Poem({ match }) {
   );
 }
 
-function Author({ match }) {
+type AuthorProps = {
+  match: match<{ id: string }>
+}
+function Author({ match }: AuthorProps) {
   return (
     <div>
       <h3>Author ID: {match.params.id}</h3>
