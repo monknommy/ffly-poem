@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "tsc -p /ffly-poem/backend/graphql && node index.js"
   },
   "dependencies": {
     "apollo-server-express": "^2.3.1",
