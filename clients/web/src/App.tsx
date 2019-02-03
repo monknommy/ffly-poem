@@ -1,6 +1,6 @@
 import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 import React, { Component } from 'react';
-import gql from "graphql-tag";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import './App.css';
@@ -10,28 +10,18 @@ const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
 });
 
-client
-  .query({
-    query: gql`
-    {
-      poem(poem_id: "111") {
-        poem_id
-      }
-    }
-    `
-  })
-  .then(result => console.log(result));
-
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <Route path="/poem/:id" component={PoemContainer} />
-          {/* <Route path="/author/:id" component={Author} /> */}
-          <Route exact path="/" component={Home} />
-        </div>
-      </Router>
+      <ApolloProvider client={client}>
+        <Router>
+          <div>
+            <Route exact path="/" component={Home} />
+            <Route path="/poem/:id" component={PoemContainer} />
+            {/* <Route path="/author/:id" component={Author} /> */}
+          </div>
+        </Router>
+      </ApolloProvider>
     );
   }
 }
