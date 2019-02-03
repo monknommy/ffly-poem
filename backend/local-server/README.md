@@ -1,6 +1,12 @@
+# Express GraphQL
+Debug in lambda is pain, this project use Express to setup the same graphql endpoint to support local developing. It read the same source code as lambda graphql endpoint.
 
-Debug in lambda is pain, simulate a local env. 
-## Populate package:
+## Setup
+Populate package:
+```
 npm install
-## Run:
+```
+Run Server:
+```
 npm start
+```

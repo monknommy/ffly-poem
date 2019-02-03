@@ -6,7 +6,7 @@ plugins:
 package:
   include:
   - node_modules
-  - generated
+  - build
   
 provider:
   name: aws
