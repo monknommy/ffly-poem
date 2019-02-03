@@ -4,7 +4,7 @@ A chinese poem app.
 ## Goal
 Explore technical architecture that bootstrap startup by leveraging techology like Serverless, AWS Lambda, AWS Dynamodb, Apollo GraphQL, Docker, React.
 
-# Setup
+## Setup
 ### AWS Account: 
 Apply a free AWS account.
 
@@ -26,3 +26,6 @@ ffly-poem/backend/local-server/README.md
 
 ### React Web Client:
 ffly-poem/clients/web/README.md
+
+## Config
+inspired by [The Twelve Factors](https://12factor.net/), environment variable is used for product wide config. fffly-poem/fconfig.env is loaded to Docker container automatically.
