@@ -13,6 +13,7 @@ const query = gql`
       id,
       annotation,
       name,
+      content,
     }
   }  
 `
