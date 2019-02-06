@@ -21,3 +21,9 @@ Deploy:
 ```
 serverless deploy
 ```
+
+# Commands
+Generate Type for GraphQL Query:
+```
+apollo client:codegen --target typescript
+```

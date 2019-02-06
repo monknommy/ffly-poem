@@ -2,15 +2,17 @@ import React from 'react';
 
 type Props = { // TODO Shawn use apollo to gen the type.
   id: string
-  annotation: string
-  name: string
-  content: string
+  annotation: string | null
+  name: string | null
+  content: string | null
 }
 class Poem extends React.Component<Props> {
   render() {
     return (
-      // <div>{this.props.name}</div>
-      // <div>{this.props.name<}/div>
+      <div>
+       <div>{this.props.name}</div>
+       <div>{this.props.content}</div>
+      </div>
     );
   }
 }

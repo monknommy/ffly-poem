@@ -2,13 +2,15 @@ import React from 'react';
 import { match } from "react-router-dom";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import Poem from "./Poem";
+import { PoemQuery, PoemQueryVariables } from "./__generated__/PoemQuery";
 
 type Props = {
   match: match<{ id: string }>
 }
 
 const query = gql`
-  query Poem($id: String!) {
+  query PoemQuery($id: String!) {
     poem(id: $id) {
       id,
       annotation,
@@ -17,25 +19,19 @@ const query = gql`
     }
   }  
 `
-
 class PoemContainer extends React.Component<Props> {
   render() {
     return (
-      <div>
-        <h3>Poem ID: {this.props.match.params.id}</h3>
-
-        <Query
-          query={query}
-          variables={ {id: this.props.match.params.id} }
-        >
-          {({ loading, error, data }) => {
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error :(</p>;
-            console.log(data);
-            return <div> success </div>
-          }}
-        </Query>
-      </div>
+      <Query<PoemQuery, PoemQueryVariables>
+        query={query}
+        variables={{ id: this.props.match.params.id }}
+      >
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error || !data || !data.poem) return <p>Error :(</p>;
+          return <Poem {...data.poem} />
+        }}
+      </Query>
     );
   }
 }
