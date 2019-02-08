@@ -1,0 +1,10 @@
+@font-face {
+  font-family:'WenYueGuDianMingChao';
+  src: url('/WenYueGuDianMingChao.otf');
+
+}
+
+.Poem {
+  font-family: 'WenYueGuDianMingChao';
+  font-size: 48px;
+}

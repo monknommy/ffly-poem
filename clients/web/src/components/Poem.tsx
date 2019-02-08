@@ -1,4 +1,5 @@
 import React from 'react';
+import './Poem.css';
 
 type Props = { // TODO Shawn use apollo to gen the type.
   id: string
@@ -9,7 +10,7 @@ type Props = { // TODO Shawn use apollo to gen the type.
 class Poem extends React.Component<Props> {
   render() {
     return (
-      <div>
+      <div className='Poem'>
        <div>{this.props.name}</div>
        <div>{this.props.content}</div>
       </div>
