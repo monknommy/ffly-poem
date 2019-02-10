@@ -1,5 +1,5 @@
 import { withStyles, WithStyles, createStyles } from "@material-ui/core/styles";
-import {Theme} from "@material-ui/core";
+import { Theme } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import React from 'react';
@@ -8,19 +8,17 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = (theme: Theme) => createStyles({
   paper: {
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    marginLeft: "auto",
+    marginRight: "auto",
     padding: theme.spacing.unit * 6,
     [theme.breakpoints.up(550 + theme.spacing.unit * 3 * 2)]: {
       width: 550,
-      marginLeft: "auto",
-      marginRight: "auto"
     }
   },
 
   poem: {
     fontFamily: 'WenYueGuDianMingChao',
-  }
+  },
 });
 
 interface Props extends WithStyles<typeof styles> {
@@ -33,10 +31,11 @@ interface Props extends WithStyles<typeof styles> {
 class Poem extends React.Component<Props> {
   render() {
     const { classes } = this.props;
+    const poemContent = this.formatPoem(this.props.content);
     return (
       <Paper className={classes.paper}>
         <Grid container>
-          <Grid item md={12}>
+          <Grid item xs={12}>
             <Typography
               variant="h4"
               gutterBottom
@@ -45,18 +44,46 @@ class Poem extends React.Component<Props> {
             >
               {this.props.name}
             </Typography>
-
-            <Typography
-              variant="h5" 
-              paragraph 
-              align="center"
-              className={classes.poem}>
-              {this.props.content}
-            </Typography>
+            <div>
+              {poemContent.map(poemLine => (
+                <Typography
+                key={poemLine}
+                  variant="h5"
+                  align="center"
+                  className={classes.poem}>
+                  {poemLine}
+                </Typography>
+              ))}
+            </div>
           </Grid>
         </Grid>
       </Paper>
     );
+  }
+
+  formatPoem(content: string | null): string[] {
+    const result: string[] = [];
+    if (content == null) {
+      return result;
+    }
+    let currentLine = "";
+    content.split('').forEach((char: string) => {
+      if (char >= '\u4e00' && char <= '\u9fa5') {
+        currentLine += char;
+      } else if (char == '。' ||
+        char == '.' ||
+        char == '？' ||
+        char == '?' ||
+        char == '！' ||
+        char == '!' ||
+        char == '，' ||
+        char == ',') {
+        currentLine += char;
+        result.push(currentLine);
+        currentLine = "";
+      }
+    });
+    return result;
   }
 }
 

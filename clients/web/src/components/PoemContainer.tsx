@@ -27,7 +27,7 @@ class PoemContainer extends React.Component<Props> {
         variables={{ id: this.props.match.params.id }}
       >
         {({ loading, error, data }) => {
-          if (loading) return <p>Loading...</p>;
+          if (loading) return null;
           if (error || !data || !data.poem) return <p>Error :(</p>;
           return <Poem {...data.poem} />
         }}
