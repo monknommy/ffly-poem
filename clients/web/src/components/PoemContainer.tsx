@@ -27,7 +27,7 @@ class PoemContainer extends React.Component<Props> {
     return (
       <Query<PoemQuery, PoemQueryVariables>
         query={query}
-        variables={{ id: this.props.match.params.id }}
+        variables={{ id: 'POEM_' + this.props.match.params.id }}
       >
         {({ loading, error, data }) => {
           if (loading) return null;
