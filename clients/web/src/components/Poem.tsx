@@ -5,6 +5,9 @@ import { PoemQuery_poem } from "./__generated__/PoemQuery";
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 
+interface Props extends WithStyles<typeof styles> {
+  poem: PoemQuery_poem
+}
 
 const styles = (theme: Theme) => createStyles({
   paper: {
@@ -19,11 +22,11 @@ const styles = (theme: Theme) => createStyles({
   poem: {
     fontFamily: 'WenYueGuDianMingChao',
   },
-});
 
-interface Props extends WithStyles<typeof styles> {
-  poem: PoemQuery_poem
-}
+  poemContent: {
+    paddingLeft: theme.spacing.unit * 2,
+  }
+});
 
 class Poem extends React.Component<Props> {
   render() {
@@ -41,13 +44,25 @@ class Poem extends React.Component<Props> {
             >
               {poem.name}
             </Typography>
+            
+            {poem.author && poem.author.name ?
+              <Typography
+                variant="subheading"
+                gutterBottom
+                align="center"
+                className={classes.poem}
+              >
+                {poem.author.name}
+              </Typography>
+              : null}
+
             <div>
               {poemContent.map((poemLine, index) => (
                 <Typography
-                key={index}
+                  key={index}
                   variant="h5"
                   align="center"
-                  className={classes.poem}>
+                  className={classes.poem + " " + classes.poemContent}>
                   {poemLine}
                 </Typography>
               ))}
