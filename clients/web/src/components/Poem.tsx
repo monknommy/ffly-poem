@@ -11,8 +11,8 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     padding: theme.spacing.unit * 6,
-    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: { //todo shawn continue here.
-      width: 1100,
+    [theme.breakpoints.up(550 + theme.spacing.unit * 3 * 2)]: {
+      width: 550,
       marginLeft: "auto",
       marginRight: "auto"
     }
@@ -36,7 +36,7 @@ class Poem extends React.Component<Props> {
     return (
       <Paper className={classes.paper}>
         <Grid container>
-          <Grid item md={6}>
+          <Grid item md={12}>
             <Typography
               variant="h4"
               gutterBottom
