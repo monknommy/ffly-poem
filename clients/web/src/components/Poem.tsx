@@ -1,4 +1,3 @@
-import './Poem.css';
 import { withStyles, WithStyles, createStyles } from "@material-ui/core/styles";
 import {Theme} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -12,10 +11,15 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     padding: theme.spacing.unit * 6,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: { //todo shawn continue here.
+      width: 1100,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
   },
 
   poem: {
-    fontFamily: 'WenYueGuDianMingChao'
+    fontFamily: 'WenYueGuDianMingChao',
   }
 });
 
@@ -34,8 +38,9 @@ class Poem extends React.Component<Props> {
         <Grid container>
           <Grid item md={6}>
             <Typography
-              variant="h3"
+              variant="h4"
               gutterBottom
+              align="center"
               className={classes.poem}
             >
               {this.props.name}
@@ -44,6 +49,7 @@ class Poem extends React.Component<Props> {
             <Typography
               variant="h5" 
               paragraph 
+              align="center"
               className={classes.poem}>
               {this.props.content}
             </Typography>
