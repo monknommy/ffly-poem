@@ -10,10 +10,21 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
-  paper: {
+  poemBox: {
     marginLeft: "auto",
     marginRight: "auto",
-    padding: theme.spacing.unit * 6,
+    [theme.breakpoints.up('xs')]: {
+      paddingBottom: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit * 6,
+      paddingRight: theme.spacing.unit * 6,
+      paddingTop: theme.spacing.unit * 6,
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingBottom: theme.spacing.unit * 6,
+      paddingLeft: theme.spacing.unit * 6,
+      paddingRight: 0,
+      paddingTop: theme.spacing.unit * 6,
+    },
     [theme.breakpoints.up(550 + theme.spacing.unit * 3 * 2)]: {
       width: 550,
     }
@@ -25,78 +36,123 @@ const styles = (theme: Theme) => createStyles({
 
   poemContent: {
     paddingLeft: theme.spacing.unit * 2,
-  }
+  },
+
+  annotationBox: {
+    [theme.breakpoints.up('xs')]: {
+      paddingBottom: theme.spacing.unit * 6,
+      paddingLeft: theme.spacing.unit * 6,
+      paddingRight: theme.spacing.unit * 6,
+      paddingTop: theme.spacing.unit * 3,
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingBottom: theme.spacing.unit * 6,
+      paddingLeft: 0,
+      paddingRight: theme.spacing.unit * 6,
+      paddingTop: theme.spacing.unit * 18,
+    },
+  },
 });
 
 class Poem extends React.Component<Props> {
   render() {
     const { classes, poem } = this.props;
-    const poemContent = this.formatPoem(poem.content);
     return (
-      <div className={classes.paper}>
+      <div>
         <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              variant="h4"
-              gutterBottom
-              align="center"
-              className={classes.poem}
-            >
-              {poem.name}
-            </Typography>
-            
-            {poem.author && poem.author.name ?
-              <Typography
-                variant="subheading"
-                gutterBottom
-                align="center"
-                className={classes.poem}
-              >
-                {poem.author.name}
-              </Typography>
-              : null}
-
-            <div>
-              {poemContent.map((poemLine, index) => (
-                <Typography
-                  key={index}
-                  variant="h5"
-                  align="center"
-                  className={classes.poem + " " + classes.poemContent}>
-                  {poemLine}
-                </Typography>
-              ))}
-            </div>
+          <Grid item xs={12} md={8} className={classes.poemBox}>
+            <PoemBox {...this.props} />
           </Grid>
+          {poem.annotation ?
+            <Grid item xs={12} md={4} className={classes.annotationBox}>
+              <AnnotationBox {...this.props} />
+            </Grid>
+            : null}
         </Grid>
       </div>
     );
   }
+}
+function AnnotationBox(props: Props) {
+  const { poem } = props;
+  if (!poem.annotation) return null;
+  return (<>
+    {poem.annotation.split('\n').map((line, index) => (
+      <Typography
+        key={index}
+        variant="body2"
+        align="left"
+        color="textSecondary"
+      >
+        {line}
+      </Typography>
+    ))}
+  </>);
+}
 
-  formatPoem(content: string | null): string[] {
-    const result: string[] = [];
-    if (content == null) {
-      return result;
-    }
-    let currentLine = "";
-    content.split('').forEach((char: string) => {
-      if (char >= '\u4e00' && char <= '\u9fa5') {
-        currentLine += char;
-      } else if (char == '。' ||
-        char == '.' ||
-        char == '？' ||
-        char == '?' ||
-        char == '！' ||
-        char == '!' ||
-        char == '，' ||
-        char == ',') {
-        currentLine += char;
-        result.push(currentLine);
-        currentLine = "";
-      }
-    });
+function PoemBox(props: Props) {
+  const { classes, poem } = props;
+  const poemContent = formatPoem(poem.content);
+  return (
+    <>
+      <Typography
+        variant="h4"
+        gutterBottom
+        align="center"
+        className={classes.poem}
+      >
+        {poem.name}
+      </Typography>
+
+      {poem.author && poem.author.name ?
+        <Typography
+          variant="subheading"
+          gutterBottom
+          align="center"
+          className={classes.poem}
+        >
+          {poem.author.name}
+        </Typography>
+        : null}
+
+      <div>
+        {poemContent.map((poemLine, index) => (
+          <Typography
+            key={index}
+            variant="h5"
+            align="center"
+            className={classes.poem + " " + classes.poemContent}>
+            {poemLine}
+          </Typography>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function formatPoem(content: string | null): string[] {
+  const result: string[] = [];
+  if (content == null) {
     return result;
   }
+  let currentLine = "";
+  content.split('').forEach((char: string) => {
+    if (char >= '\u4e00' && char <= '\u9fa5') {
+      currentLine += char;
+    } else if (char == '。' ||
+      char == '.' ||
+      char == '？' ||
+      char == '?' ||
+      char == '！' ||
+      char == '!' ||
+      char == '，' ||
+      char == ',') {
+      currentLine += char;
+      result.push(currentLine);
+      currentLine = "";
+    }
+  });
+  return result;
 }
 
 export default withStyles(styles)(Poem);
