@@ -1,9 +1,11 @@
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
+import { ApolloProvider } from "react-apollo";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ApolloClient from "apollo-boost";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import PoemContainer from "./components/PoemContainer";
+import React, { Component } from 'react';
+import Toolbar from "@material-ui/core/Toolbar";
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
@@ -12,15 +14,18 @@ const client = new ApolloClient({
 class App extends Component {
   render() {
     return (
+      <>
+      <CssBaseline />
       <ApolloProvider client={client}>
         <Router>
           <div>
-            <Route exact path="/" component={Home} />
+            <Route path="/" component={Home} />
             <Route path="/poem/:id" component={PoemContainer} />
             {/* <Route path="/author/:id" component={Author} /> */}
           </div>
         </Router>
       </ApolloProvider>
+      </>
     );
   }
 }
@@ -28,7 +33,7 @@ class App extends Component {
 function Home() {
   return (
     <div>
-      <h3>Firefly Poem, TBD</h3>
+      <Toolbar />
     </div>
   );
 }

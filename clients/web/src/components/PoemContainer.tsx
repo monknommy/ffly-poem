@@ -28,8 +28,8 @@ class PoemContainer extends React.Component<Props> {
       >
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
-          if (error || !data || !data.poem) return <p>Error :(</p>;
-          return <Poem {...data.poem} />
+          if (error || !data) return <p>Error :(</p>;
+          return <Poem {data.poem} />
         }}
       </Query>
     );
