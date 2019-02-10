@@ -1,7 +1,7 @@
 import { withStyles, WithStyles, createStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import { PoemQuery_poem } from "./__generated__/PoemQuery";
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 
@@ -22,18 +22,15 @@ const styles = (theme: Theme) => createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  id: string
-  annotation: string | null
-  name: string | null
-  content: string | null
+  poem: PoemQuery_poem
 }
 
 class Poem extends React.Component<Props> {
   render() {
-    const { classes } = this.props;
-    const poemContent = this.formatPoem(this.props.content);
+    const { classes, poem } = this.props;
+    const poemContent = this.formatPoem(poem.content);
     return (
-      <Paper className={classes.paper}>
+      <div className={classes.paper}>
         <Grid container>
           <Grid item xs={12}>
             <Typography
@@ -42,12 +39,12 @@ class Poem extends React.Component<Props> {
               align="center"
               className={classes.poem}
             >
-              {this.props.name}
+              {poem.name}
             </Typography>
             <div>
-              {poemContent.map(poemLine => (
+              {poemContent.map((poemLine, index) => (
                 <Typography
-                key={poemLine}
+                key={index}
                   variant="h5"
                   align="center"
                   className={classes.poem}>
@@ -57,7 +54,7 @@ class Poem extends React.Component<Props> {
             </div>
           </Grid>
         </Grid>
-      </Paper>
+      </div>
     );
   }
 

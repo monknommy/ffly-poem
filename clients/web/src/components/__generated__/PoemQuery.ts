@@ -5,12 +5,18 @@
 // GraphQL query operation: PoemQuery
 // ====================================================
 
+export interface PoemQuery_poem_author {
+  __typename: "Author";
+  name: string | null;
+}
+
 export interface PoemQuery_poem {
   __typename: "Poem";
   id: string;
   annotation: string | null;
   name: string | null;
   content: string;
+  author: PoemQuery_poem_author | null;
 }
 
 export interface PoemQuery {

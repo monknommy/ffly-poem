@@ -16,6 +16,9 @@ const query = gql`
       annotation,
       name,
       content,
+      author {
+        name
+      }
     }
   }  
 `
@@ -29,7 +32,7 @@ class PoemContainer extends React.Component<Props> {
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error || !data || !data.poem) return <p>Error :(</p>;
-          return <Poem {...data.poem} />
+          return <Poem poem={data.poem} />
         }}
       </Query>
     );
