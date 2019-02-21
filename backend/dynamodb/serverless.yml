@@ -8,6 +8,26 @@ provider:
   profile: serverless
   environment: 
     STAGE: ${env:STAGE}
+  iamRoleStatements:
+    # Permissions for reading stream.
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeStream
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
+        - dynamodb:ListStreams
+      Resource: 
+        # match up format like: arn:aws:dynamodb:us-west-1:123445678:table/dev-ffly-poem-meta
+        Resource: "arn:aws:dynamodb:${env:FFLY_AWS_REGION}:${env:FFLY_AWS_ACCOUNT_ID}:table/${env:AWS_DYNAMODB_META_TABLE}"
+
+functions:
+  export_to_elasticsearch:
+    handler: export_to_elasticsearch.handle
+    events:
+    - stream:
+      type: dynamodb
+        arn:
+          Fn::GetAtt: [ FFlyPoemDynamodbMeta, StreamArn ]
 
 resources:
   Resources:
@@ -38,3 +58,5 @@ resources:
             ProvisionedThroughput:
               ReadCapacityUnits: 2
               WriteCapacityUnits: 1
+        StreamSpecification:
+            StreamViewType: 'NEW_IMAGE'
