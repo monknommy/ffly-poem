@@ -75,7 +75,7 @@ def parse_all():
     
 
 def fill():
-    db_name = {os.environ['AWS_DYNAMODB_META_TABLE']}
+    db_name = os.environ['AWS_DYNAMODB_META_TABLE']
     dynamodb = boto3.resource('dynamodb', region_name=os.environ['FFLY_AWS_REGION'])
     table = dynamodb.Table(db_name)
     with table.batch_writer() as batch:
