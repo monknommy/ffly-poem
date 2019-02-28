@@ -1,8 +1,11 @@
 service: ffly-poem-dynamodb
 
+plugins:
+  - serverless-dotenv-plugin
+  
 provider:
   name: aws
-  runtime: python3.6
+  runtime: nodejs8.10
   region: ${env:FFLY_AWS_REGION}
   stage: ${env:STAGE}
   profile: serverless
@@ -19,6 +22,11 @@ provider:
         # match up format like: arn:aws:dynamodb:us-west-1:123445678:table/dev-ffly-poem-meta
       Resource: "arn:aws:dynamodb:${env:FFLY_AWS_REGION}:${env:FFLY_AWS_ACCOUNT_ID}:table/${env:AWS_DYNAMODB_META_TABLE}"
 
+custom:
+  # This will forward all env variables to lambda.
+  dotenv:
+    path: /ffly-poem/ffconfig.env
+    
 functions:
   exportToElasticsearch:
     handler: export_to_elasticsearch.handler
