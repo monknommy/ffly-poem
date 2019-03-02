@@ -9,8 +9,8 @@
 const path = require('path');
 const AWS = require('aws-sdk');
 
-const { FFLY_AWS_REGION, ELASTICSEARCH_DOMAIN } = process.env;
-const endpoint = new AWS.Endpoint(ELASTICSEARCH_DOMAIN);
+const { FFLY_AWS_REGION, ELASTICSEARCH_DOMAIN_ENDPOINT } = process.env;
+const endpoint = new AWS.Endpoint(ELASTICSEARCH_DOMAIN_ENDPOINT);
 const httpClient = new AWS.HttpClient();
 const parse = AWS.DynamoDB.Converter.output;
 
@@ -38,7 +38,7 @@ async function sendElasticsearchRequest({ httpMethod, requestPath, payload }) {
   request.path = path.join(request.path, requestPath);
   request.body = JSON.stringify(payload);
   request.headers['Content-Type'] = 'application/json';
-  request.headers['Host'] = ELASTICSEARCH_DOMAIN;
+  request.headers['Host'] = ELASTICSEARCH_DOMAIN_ENDPOINT;
 
   const signer = new AWS.Signers.V4(request, 'es');
   const credentials = await getAWSCredentials();
