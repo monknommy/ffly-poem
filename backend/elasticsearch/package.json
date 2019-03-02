@@ -1,10 +1,9 @@
 {
-  "name": "ffly-poem-dynamodb",
+  "name": "ffly-poem-elasticsearch",
   "version": "1.0.0",
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "aws-sdk": "^2.411.0",
     "serverless-dotenv-plugin": "^2.0.1"
   }
 }

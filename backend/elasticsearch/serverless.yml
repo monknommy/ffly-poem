@@ -1,0 +1,50 @@
+service: ffly-poem-elasticsearch
+
+plugins:
+  - serverless-dotenv-plugin
+  
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ${env:FFLY_AWS_REGION}
+  stage: ${env:STAGE}
+  profile: serverless
+  environment: 
+    STAGE: ${env:STAGE}
+
+custom:
+  dotenv:
+    path: /ffly-poem/ffconfig.env
+    
+resources:
+  Resources:
+    FFlyPoemElasticSearch:
+      Type: AWS::Elasticsearch::Domain
+      Properties:
+        DomainName: ${env:ELASTICSEARCH_DOMAIN_NAME}
+        ElasticsearchClusterConfig: 
+          InstanceCount: "1"
+          InstanceType: "t2.small.elasticsearch"
+        EBSOptions: 
+          EBSEnabled: true
+          VolumeSize: 10
+        SnapshotOptions: 
+          AutomatedSnapshotStartHour: "0"
+        AdvancedOptions: 
+          rest.action.multi.allow_explicit_index: "true"
+        AccessPolicies:
+          Version: "2012-10-17"
+          Statement: 
+            - 
+              Effect: "Allow"
+              Principal: 
+                AWS: # Allow dynamodb write and graphql read.
+                  - "arn:aws:iam::${env:FFLY_AWS_ACCOUNT_ID}:role/ffly-poem-dynamodb-${env:STAGE}-${env:FFLY_AWS_REGION}-lambdaRole"
+                  - "arn:aws:iam::${env:FFLY_AWS_ACCOUNT_ID}:role/ffly-poem-graphql-${env:STAGE}-${env:FFLY_AWS_REGION}-lambdaRole"
+              Action: "es:*"
+                # match up format like: "arn:aws:es:us-west-1:262807792923:domain/ffly-elasticsearch-test/*"
+              Resource: "arn:aws:es:${env:FFLY_AWS_REGION}:${env:FFLY_AWS_ACCOUNT_ID}:domain/${env:ELASTICSEARCH_DOMAIN_NAME}"
+  Outputs:
+    ElasticSearchDomainEndpoint:
+      Value: 
+        !GetAtt FFlyPoemElasticSearch.DomainEndpoint
