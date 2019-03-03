@@ -87,14 +87,38 @@ exports.handler = function (event, _context, _callback) {
       payload: document
     };
     sendElasticsearchRequest(params)
-      .then(response => {
-        console.info(response);
+      .then(_response => {
+        console.info(_response);
       }).catch(error => {
         console.error(error);
       });
   });
+  console.log('successfully processed ' + event.Records.length + ' to elastic search');
 }
 
+// function search () {
+//   const params = {
+//     httpMethod: 'POST',
+//     requestPath: 'ffly-poem/_search',
+//     payload: {
+//       "size": 10,
+//       "query": {
+//         "multi_match": {
+//           "query": "知否",
+//           "fields": ["name", "content"]
+//         }
+//       }
+//     }
+//   };
+//   sendElasticsearchRequest(params)
+//     .then(response => {
+//       console.info(response.body.hits.hits);
+//     }).catch(error => {
+//       console.error(error);
+//     });
+// }
+
+// search()
 // const record = {
 //   "eventID": "7a3cc4044e22e945ed482336d697ce4b",
 //   "eventName": "INSERT",
@@ -124,3 +148,4 @@ exports.handler = function (event, _context, _callback) {
 // }
 // const event = { "Records": [record] }
 // exports.handler(event, null, null);
+

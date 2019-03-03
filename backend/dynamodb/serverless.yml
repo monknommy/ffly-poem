@@ -12,16 +12,20 @@ provider:
   environment: 
     STAGE: ${env:STAGE}
   iamRoleStatements:
-    # Permissions for reading stream.
     - Effect: Allow
       Action:
         - dynamodb:DescribeStream
         - dynamodb:GetRecords
         - dynamodb:GetShardIterator
         - dynamodb:ListStreams
-        # match up format like: arn:aws:dynamodb:us-west-1:123445678:table/dev-ffly-poem-meta
-      Resource: "arn:aws:dynamodb:${env:FFLY_AWS_REGION}:${env:FFLY_AWS_ACCOUNT_ID}:table/${env:AWS_DYNAMODB_META_TABLE}"
-
+      Resource: arn:aws:dynamodb:${env:FFLY_AWS_REGION}:${env:FFLY_AWS_ACCOUNT_ID}:table/${env:AWS_DYNAMODB_META_TABLE}
+    - Effect: Allow
+      Action:
+        - es:ESHttpPost
+        - es:ESHttpPut
+      ## Can't use exact resource name ${env:ELASTICSEARCH_DOMAIN_NAME} because aws is dumb.
+      Resource: arn:aws:es:${env:FFLY_AWS_REGION}:${env:FFLY_AWS_ACCOUNT_ID}:domain/*
+      
 custom:
   # This will forward all env variables to lambda.
   dotenv:
@@ -56,14 +60,14 @@ resources:
           ReadCapacityUnits: 2
           WriteCapacityUnits: 1
         GlobalSecondaryIndexes:
-          - IndexName: 'index_by_edge'
+          - IndexName: index_by_edge
             KeySchema:
               - AttributeName: edge
                 KeyType: HASH
             Projection:
-              ProjectionType: 'KEYS_ONLY'
+              ProjectionType: KEYS_ONLY
             ProvisionedThroughput:
               ReadCapacityUnits: 2
               WriteCapacityUnits: 1
         StreamSpecification:
-            StreamViewType: 'NEW_IMAGE'
+            StreamViewType: NEW_IMAGE
