@@ -6,3 +6,4 @@ jspm_packages
 .serverless
 credentials
 backend/graphql/build
+**/.DS_Store
