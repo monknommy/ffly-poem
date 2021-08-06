@@ -15,3 +15,9 @@ Run container:
 ```
 
 Once inside the container, you should able to see a linux shell with everything installed. For example, nodejs 8, python 3, serverless, typescript, react... Check Dockerfile for details.
+
+
+Attach a new shell to a running container:
+```
+docker exec -it  ffly-poem-development /bin/bash
+```

@@ -14,7 +14,7 @@ npm start
 
 Build:
 ```
-npm build
+npm run-script build
 ```
 
 Deploy:
