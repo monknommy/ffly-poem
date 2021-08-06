@@ -8,14 +8,14 @@ RUN apt-get update
  RUN apt-get install -y curl
  RUN apt-get install -y gnupg
 
-# nodejs v8.15 to simulate lambda runtime v8.10 in AWS.
+# nodejs v14 to simulate lambda runtime v14 in AWS.
 # nodejs need to be installed before python to avoid override.
- RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
  && apt-get install -y nodejs
 
 # python3
-RUN apt-get install -y python3.7 \
-&& ln -sf /usr/bin/python3.7 /usr/bin/python
+RUN apt-get install -y python3.9 \
+&& ln -sf /usr/bin/python3.9 /usr/bin/python
 
 # pip
 RUN  apt-get install -y python3-pip
@@ -31,6 +31,7 @@ RUN npm install -g serverless
 
 RUN npm install -g typescript
 
+# https://www.npmjs.com/package/apollo Command line tool for Apollo
 RUN npm install -g apollo
 
 # Expose port for local server. 

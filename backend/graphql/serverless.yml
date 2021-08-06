@@ -10,7 +10,7 @@ package:
   
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs14.x
   region: ${env:FFLY_AWS_REGION}
   stage: ${env:STAGE}
   profile: serverless

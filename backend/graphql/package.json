@@ -5,13 +5,13 @@
   "dependencies": {
     "@types/aws-lambda": "^8.10.18",
     "@types/graphql": "^14.0.5",
-    "apollo-server-lambda": "^2.3.3",
-    "graphql": "^14.0.2"
+    "apollo-server-lambda": "^2.25.2",
+    "graphql": "^14.7.0"
   },
   "devDependencies": {
     "aws-lambda": "^0.1.2",
-    "aws-sdk": "^2.395.0",
-    "serverless-dotenv-plugin": "^2.0.1"
+    "aws-sdk": "^2.962.0",
+    "serverless-dotenv-plugin": "^2.4.2"
   },
   "scripts": {
     "build": "tsc"
